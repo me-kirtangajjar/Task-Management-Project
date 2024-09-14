@@ -1,13 +1,16 @@
+const mongoose = require("mongoose");
 const {
   DATA_CREATION_SUCCESS,
   SERVER_ERROR,
   DATA_FETCH_SUCCESS,
   TASK_NOT_FOUND,
-  TASK_UPDATE_SUCCESS,
   DATA_UPDATE_SUCCESS,
   DATA_DELETION_SUCCESS,
+  INVALID_TASK_ID,
 } = require("../constants/responseMessages");
 const tasksModel = require("../models/tasksModel");
+
+const validateObjectId = (id) => mongoose.isValidObjectId(id);
 
 const createTask = async (req, res) => {
   try {
@@ -38,6 +41,10 @@ const updateTaskStatus = async (req, res) => {
   try {
     const { taskId } = req.params;
 
+    if (!validateObjectId(taskId)) {
+      return res.status(400).send({ msg: INVALID_TASK_ID });
+    }
+
     const task = await tasksModel.findOne({ _id: taskId });
     if (!task) {
       return res.status(400).send({ msg: TASK_NOT_FOUND });
@@ -60,6 +67,10 @@ const updateTask = async (req, res) => {
   try {
     const { taskId } = req.params;
 
+    if (!validateObjectId(taskId)) {
+      return res.status(400).send({ msg: INVALID_TASK_ID });
+    }
+
     const task = await tasksModel.findOne({ _id: taskId });
     if (!task) {
       return res.status(400).send({ msg: TASK_NOT_FOUND });
@@ -81,7 +92,13 @@ const updateTask = async (req, res) => {
 
 const deleteTask = async (req, res) => {
   try {
-    await tasksModel.findByIdAndUpdate(req.params.taskId, { isDeleted: true });
+    const { taskId } = req.params;
+
+    if (!validateObjectId(taskId)) {
+      return res.status(400).send({ msg: INVALID_TASK_ID });
+    }
+
+    await tasksModel.findByIdAndUpdate(taskId, { isDeleted: true });
     return res.status(200).send({ msg: DATA_DELETION_SUCCESS });
   } catch (error) {
     console.error(error);
