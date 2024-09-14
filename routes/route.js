@@ -2,7 +2,7 @@ const router = require("express").Router();
 const {
   userRegisterValidation,
   userLoginValidation,
-} = require("../validators/users.validators");
+} = require("../validators/user.validators");
 const { validateRequest } = require("../middlewares/validateRequest");
 const { userRegister, userLogin } = require("../controllers/usersController");
 const {
@@ -13,6 +13,7 @@ const {
   deleteTask,
 } = require("../controllers/tasksController");
 const { authoriseUser } = require("../middlewares/auth");
+const { taskValidation } = require("../validators/task.validators");
 
 // User routes
 router.post(
@@ -24,10 +25,22 @@ router.post(
 router.post("/users/login", userLoginValidation, validateRequest, userLogin);
 
 // Task routes
-router.post("/tasks", authoriseUser, createTask);
+router.post(
+  "/tasks",
+  taskValidation,
+  validateRequest,
+  authoriseUser,
+  createTask
+);
 router.get("/tasks", authoriseUser, getUserTasks);
-router.post("/tasks/:taskId", authoriseUser, updateTaskStatus);
-router.put("/tasks/:taskId", authoriseUser, updateTask);
+router.patch("/tasks/:taskId", authoriseUser, updateTaskStatus);
+router.put(
+  "/tasks/:taskId",
+  taskValidation,
+  validateRequest,
+  authoriseUser,
+  updateTask
+);
 router.delete("/tasks/:taskId", authoriseUser, deleteTask);
 
 module.exports = router;

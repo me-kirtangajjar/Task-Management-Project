@@ -43,7 +43,11 @@ const updateTaskStatus = async (req, res) => {
       return res.status(400).send({ msg: TASK_NOT_FOUND });
     }
 
-    await tasksModel.findByIdAndUpdate(taskId, { completed: !task.completed });
+    if (task.completed == true) {
+      return res.status(200).send({ msg: "Task is already completed" });
+    }
+
+    await tasksModel.findByIdAndUpdate(taskId, { completed: true });
 
     return res.status(200).send({ msg: DATA_UPDATE_SUCCESS });
   } catch (error) {
