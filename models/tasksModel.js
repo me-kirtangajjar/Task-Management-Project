@@ -17,6 +17,7 @@ const taskSchema = new Schema(
     },
     completed: { type: Boolean, default: false },
     userId: { type: Schema.Types.ObjectId, ref: "users", required: true },
+    isDeleted: { type: Boolean, default: false },
   },
   { timestamps: true }
 );

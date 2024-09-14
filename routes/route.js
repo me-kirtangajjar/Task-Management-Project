@@ -9,6 +9,7 @@ const {
   createTask,
   getUserTasks,
   updateTaskStatus,
+  updateTask,
 } = require("../controllers/tasksController");
 const { authoriseUser } = require("../middlewares/auth");
 
@@ -21,8 +22,10 @@ router.post(
 );
 router.post("/users/login", userLoginValidation, validateRequest, userLogin);
 
+// Task routes
 router.post("/tasks", authoriseUser, createTask);
 router.get("/tasks", authoriseUser, getUserTasks);
 router.post("/tasks/:taskId", authoriseUser, updateTaskStatus);
+router.put("/tasks/:taskId", updateTask);
 
 module.exports = router;

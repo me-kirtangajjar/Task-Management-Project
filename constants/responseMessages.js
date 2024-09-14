@@ -13,10 +13,6 @@ module.exports = {
   PASSWORD_TOO_SHORT: "Password must be at least 6 characters long.",
   PASSWORD_MISMATCH: "Passwords do not match.",
 
-  // Task messages
-  TASK_NOT_FOUND: "Task not found",
-  TASK_UPDATE_SUCCESS: "Task updated successfully",
-
   // General success/failure messages
   OPERATION_SUCCESS: "Operation completed successfully.",
   OPERATION_FAILED: "Operation failed. Please try again.",

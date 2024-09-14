@@ -4,6 +4,7 @@ const {
   DATA_FETCH_SUCCESS,
   TASK_NOT_FOUND,
   TASK_UPDATE_SUCCESS,
+  DATA_UPDATE_SUCCESS,
 } = require("../constants/responseMessages");
 const tasksModel = require("../models/tasksModel");
 
@@ -40,11 +41,34 @@ const updateTaskStatus = async (req, res) => {
 
     await tasksModel.findByIdAndUpdate(taskId, { completed: !task.completed });
 
-    return res.status(200).send({ msg: TASK_UPDATE_SUCCESS });
+    return res.status(200).send({ msg: DATA_UPDATE_SUCCESS });
   } catch (error) {
     console.error(error);
     return res.status(500).send({ msg: SERVER_ERROR });
   }
 };
 
-module.exports = { createTask, getUserTasks, updateTaskStatus };
+const updateTask = async (req, res) => {
+  try {
+    const { taskId } = req.params;
+
+    const task = await tasksModel.findOne({ _id: taskId });
+    if (!task) {
+      return res.status(400).send({ msg: TASK_NOT_FOUND });
+    }
+
+    const { title, description, completed } = req.body;
+    await tasksModel.findByIdAndUpdate(taskId, {
+      title,
+      description,
+      completed,
+    });
+
+    return res.status(200).send({ msg: DATA_UPDATE_SUCCESS });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).send({ msg: SERVER_ERROR });
+  }
+};
+
+module.exports = { createTask, getUserTasks, updateTaskStatus, updateTask };
