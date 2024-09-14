@@ -45,6 +45,8 @@ const userLogin = async (req, res) => {
       return res.status(400).send({ msg: PASSWORD_MISMATCH });
     }
 
+    console.log(user._id)
+
     return res.status(200).send({
       msg: LOGIN_SUCCESS,
       Authorization: jwt.sign({ uId: user._id }, process.env.JWT_KEY, {

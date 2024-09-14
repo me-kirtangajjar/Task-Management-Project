@@ -5,6 +5,7 @@ const {
   TASK_NOT_FOUND,
   TASK_UPDATE_SUCCESS,
   DATA_UPDATE_SUCCESS,
+  DATA_DELETION_SUCCESS,
 } = require("../constants/responseMessages");
 const tasksModel = require("../models/tasksModel");
 
@@ -22,7 +23,10 @@ const createTask = async (req, res) => {
 
 const getUserTasks = async (req, res) => {
   try {
-    const usersTask = await tasksModel.find({ userId: req.uId });
+    const usersTask = await tasksModel.find({
+      userId: req.userId,
+      isDeleted: false,
+    });
     return res.status(200).send({ msg: DATA_FETCH_SUCCESS, data: usersTask });
   } catch (error) {
     console.error(error);
@@ -71,4 +75,20 @@ const updateTask = async (req, res) => {
   }
 };
 
-module.exports = { createTask, getUserTasks, updateTaskStatus, updateTask };
+const deleteTask = async (req, res) => {
+  try {
+    await tasksModel.findByIdAndUpdate(req.params.taskId, { isDeleted: true });
+    return res.status(200).send({ msg: DATA_DELETION_SUCCESS });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).send({ msg: SERVER_ERROR });
+  }
+};
+
+module.exports = {
+  createTask,
+  getUserTasks,
+  updateTaskStatus,
+  updateTask,
+  deleteTask,
+};
