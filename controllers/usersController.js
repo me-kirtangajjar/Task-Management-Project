@@ -1,4 +1,5 @@
 const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
 const usersModel = require("../models/usersModel");
 const {
   ACCOUNT_CREATED,
@@ -6,7 +7,7 @@ const {
   USER_NOT_FOUND,
   SERVER_ERROR,
   LOGIN_SUCCESS,
-  INVALID_CREDENTIALS,
+  PASSWORD_MISMATCH,
 } = require("../constants/responseMessages");
 
 const userRegister = async (req, res) => {
@@ -41,10 +42,15 @@ const userLogin = async (req, res) => {
 
     const passwordMatched = await bcrypt.compare(password, user.password);
     if (!passwordMatched) {
-      return res.status(400).send({ msg: INVALID_CREDENTIALS });
+      return res.status(400).send({ msg: PASSWORD_MISMATCH });
     }
 
-    return res.status(200).send({ msg: LOGIN_SUCCESS });
+    return res.status(200).send({
+      msg: LOGIN_SUCCESS,
+      Authorization: jwt.sign({ uId: user._id }, process.env.JWT_KEY, {
+        expiresIn: "30d",
+      }),
+    });
   } catch (error) {
     console.error(error);
     return res.status(500).send({ msg: SERVER_ERROR });

@@ -4,7 +4,9 @@ const {
   userLoginValidation,
 } = require("../validators/users.validators");
 const { validateRequest } = require("../middlewares/validateRequest");
-const { userRegister, userLogin } = require("../controllers/userController");
+const { userRegister, userLogin } = require("../controllers/usersController");
+const { createTask } = require("../controllers/tasksController");
+const { authoriseUser } = require("../middlewares/auth");
 
 // User routes
 router.post(
@@ -14,5 +16,7 @@ router.post(
   userRegister
 );
 router.post("/users/login", userLoginValidation, validateRequest, userLogin);
+
+router.post("/tasks", authoriseUser, createTask);
 
 module.exports = router;
