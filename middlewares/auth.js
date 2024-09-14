@@ -2,6 +2,7 @@ const jwt = require("jsonwebtoken");
 const {
   INVALID_TOKEN,
   TOKEN_EXPIRED,
+  SERVER_ERROR,
 } = require("../constants/responseMessages");
 
 const authoriseUser = async (req, res, next) => {
