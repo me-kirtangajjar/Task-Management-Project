@@ -1,6 +1,7 @@
 const { checkExact, body } = require("express-validator");
+const { INVALID_EMAIL_FORMAT, PASSWORD_TOO_SHORT } = require("../constants/responseMessages");
 
-const usersRegisterValidator = checkExact([
+const userRegisterValidation = checkExact([
   body("name")
     .notEmpty()
     .withMessage("Enter name")
@@ -14,16 +15,31 @@ const usersRegisterValidator = checkExact([
     .isString()
     .withMessage("Email must be a string")
     .isEmail()
-    .withMessage("Enter valid email"),
+    .withMessage(INVALID_EMAIL_FORMAT),
   body("password")
     .notEmpty()
+    .withMessage("Enter password")
     .isString()
     .withMessage("Password must be a string")
-    .withMessage("Enter password")
     .isLength({ min: 6 })
-    .withMessage("Password must be at least 6 characters long")
+    .withMessage(PASSWORD_TOO_SHORT)
     .isLength({ max: 64 })
     .withMessage("Password must be less than 64 characters"),
 ]);
 
-module.exports = { usersRegisterValidator };
+const userLoginValidation = checkExact([
+  body("email")
+    .notEmpty()
+    .withMessage("Enter email")
+    .isString()
+    .withMessage("Email must be string")
+    .isEmail()
+    .withMessage(INVALID_EMAIL_FORMAT),
+  body("password")
+    .notEmpty()
+    .withMessage("Enter password")
+    .isString()
+    .withMessage("Password must be a string"),
+]);
+
+module.exports = { userRegisterValidation, userLoginValidation };

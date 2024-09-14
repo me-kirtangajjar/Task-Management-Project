@@ -3,10 +3,10 @@ const mongoose = require("mongoose");
 require("dotenv").config();
 const app = express();
 
-app.use(express.json())
+app.use(express.json());
 
 mongoose
-  .connect(process.env.DBURI)
+  .connect(process.env.DB_URI)
   .then(() => {
     console.log(`DB Connected Successfully`);
   })
