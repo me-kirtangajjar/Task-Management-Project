@@ -33,7 +33,7 @@ router.post(
   createTask
 );
 router.get("/tasks", authoriseUser, getUserTasks);
-router.patch("/tasks/:taskId", authoriseUser, updateTaskStatus);
+router.patch("/tasks/:taskId/status", authoriseUser, updateTaskStatus);
 router.put(
   "/tasks/:taskId",
   taskValidation,

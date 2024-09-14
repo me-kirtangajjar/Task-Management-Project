@@ -18,7 +18,7 @@ This is a RESTful API for a To-Do List application built with Node.js, Express, 
 1. Clone the repository:
    ```
    git clone https://github.com/me-kirtangajjar/Task-Management-Project
-   cd todo-list-app
+   cd Task-Management-Project
    ```
 
 2. Install dependencies:
