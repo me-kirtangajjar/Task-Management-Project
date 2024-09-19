@@ -3,7 +3,7 @@ const {
   INVALID_TOKEN,
   TOKEN_EXPIRED,
   SERVER_ERROR,
-} = require("../constants/responseMessages");
+} = require("../constant/responseMessage");
 
 const authoriseUser = async (req, res, next) => {
   try {
