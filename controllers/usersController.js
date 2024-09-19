@@ -1,6 +1,6 @@
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const usersModel = require("../model/usersModel");
+const usersModel = require("../models/usersModel");
 const {
   ACCOUNT_CREATED,
   EMAIL_ALREADY_EXISTS,
@@ -8,7 +8,7 @@ const {
   SERVER_ERROR,
   LOGIN_SUCCESS,
   PASSWORD_MISMATCH,
-} = require("../constant/responseMessage");
+} = require("../constants/responseMessages");
 
 const userRegister = async (req, res) => {
   try {

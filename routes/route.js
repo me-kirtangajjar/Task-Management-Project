@@ -3,16 +3,16 @@ const {
   userRegisterValidation,
   userLoginValidation,
 } = require("../validators/user.validators");
-const { validateRequest } = require("../middleware/validateRequest");
-const { userRegister, userLogin } = require("../controller/usersController");
+const { validateRequest } = require("../middlewares/validateRequest");
+const { userRegister, userLogin } = require("../controllers/usersController");
 const {
   createTask,
   getUserTasks,
   updateTaskStatus,
   updateTask,
   deleteTask,
-} = require("../controller/tasksController");
-const { authoriseUser } = require("../middleware/auth");
+} = require("../controllers/tasksController");
+const { authoriseUser } = require("../middlewares/auth");
 const { taskValidation } = require("../validators/task.validators");
 
 // User routes

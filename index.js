@@ -1,7 +1,5 @@
 const express = require("express");
 const mongoose = require("mongoose");
-const { default: globalErrorHandler } = require("./middleware/globalErrorHandler");
-
 require("dotenv").config();
 const app = express();
 
@@ -16,8 +14,7 @@ mongoose
     console.log(error);
   });
 
-app.use("/api", require("./router/apiRouter"));
-app.use(globalErrorHandler)
+app.use("/api", require("./routes/route"));
 
 app.listen(process.env.PORT, (error) => {
   if (error) {

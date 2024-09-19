@@ -7,8 +7,8 @@ const {
   DATA_UPDATE_SUCCESS,
   DATA_DELETION_SUCCESS,
   INVALID_TASK_ID,
-} = require("../constant/responseMessage");
-const tasksModel = require("../model/tasksModel");
+} = require("../constants/responseMessages");
+const tasksModel = require("../models/tasksModel");
 
 const validateObjectId = (id) => mongoose.isValidObjectId(id);
 

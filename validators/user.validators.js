@@ -1,5 +1,5 @@
 const { checkExact, body } = require("express-validator");
-const { INVALID_EMAIL_FORMAT, PASSWORD_TOO_SHORT } = require("../constant/responseMessage");
+const { INVALID_EMAIL_FORMAT, PASSWORD_TOO_SHORT } = require("../constants/responseMessages");
 
 const userRegisterValidation = checkExact([
   body("name")
